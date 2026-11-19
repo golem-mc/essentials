@@ -214,6 +214,12 @@ func TestSpeed(t *testing.T) {
 	if s := env.Player("Alice").FlySpeed(); s < 0.049 || s > 0.051 {
 		t.Fatalf("fly speed = %v", s)
 	}
+	// A player without essentials.speed is reset to Bukkit's default speeds
+	// on join, which must be the normal speeds, not twice them.
+	env.Join("Bob", false)
+	if p := env.Player("Bob"); p.WalkSpeed() < 0.199 || p.WalkSpeed() > 0.201 || p.FlySpeed() < 0.099 || p.FlySpeed() > 0.101 {
+		t.Fatalf("Bob's speeds after joining: walk %v, fly %v; want 0.2 and 0.1", p.WalkSpeed(), p.FlySpeed())
+	}
 }
 
 // TestTreeRemove grows a tree where the player looks, then removes mobs.

@@ -58,7 +58,7 @@ each entry with the new version, or change all the versions in
 `plugin list` shows its latest version as unknown, because the launcher
 looks each entry's versions up as if it were a module of its own.
 
-The plugins need golem at commit `5e5798f` or newer. If your server is too
+The plugins need golem at commit `056d502` or newer. If your server is too
 old, the launcher says so and tells you how to update it.
 
 ### As a ready-built server
