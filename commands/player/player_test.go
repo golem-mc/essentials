@@ -324,7 +324,7 @@ func TestEventsCancel(t *testing.T) {
 	})
 	p := env.Player("Alice")
 	env.Console("damage Alice 5")
-	p.SetFood(5)
+	env.Sync(func() { p.SetFood(5) })
 	env.Drain(a)
 	if msgs := env.Run(a, "heal"); esstest.Has(msgs, "healed") {
 		t.Fatalf("a cancelled heal still healed: %q", msgs)

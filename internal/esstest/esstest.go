@@ -54,6 +54,25 @@ func (env *Env) Join(name string, op bool) *Client {
 // ChatBestEffort says message in chat.
 func (c *Client) ChatBestEffort(message string) { c.Run(message) }
 
+// Sync runs fn on the tick goroutine, as a plugin's own code runs, and
+// returns once it has run. Use it for a state change a tick could race with:
+// golem compares some state (the food bar, for one) before and after a tick,
+// and takes a change made from another goroutine in between for the tick's.
+func (env *Env) Sync(fn func()) {
+	env.T.Helper()
+	done := make(chan struct{})
+	env.Ess.Server.Scheduler().RunTask(func() { fn(); close(done) })
+	for range 100 {
+		select {
+		case <-done:
+			return
+		default:
+			env.Srv.RunTicks(1)
+		}
+	}
+	env.T.Fatal("Sync: the task did not run within 100 ticks")
+}
+
 // Player answers the plugin handle of the online player name.
 func (env *Env) Player(name string) plugin.Player {
 	env.T.Helper()
