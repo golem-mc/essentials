@@ -1,0 +1,9 @@
+# Working notes (golem requirements, porting history); kept locally, not published.
+GOLEM_REQUIREMENTS.md
+GOLEM_NOTES.md
+notes/
+
+# Local builds and runs
+/essentials-server
+go.work
+go.work.sum
