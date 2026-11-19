@@ -263,14 +263,6 @@ func (e *Essentials) registerOn(s plugin.Server, metas *pluginYML, cmds []Cmd) {
 				names = append(names, n)
 			}
 		}
-		perm := "essentials." + c.Name
-		switch c.Permission {
-		case "-":
-			perm = ""
-		case "":
-		default:
-			perm = c.Permission
-		}
 		// Override takes vanilla's names, as Essentials does on Bukkit
 		// (disabled-commands gives one back). A name another plugin holds
 		// fails the whole registration, so it is left to that plugin and
@@ -278,7 +270,7 @@ func (e *Essentials) registerOn(s plugin.Server, metas *pluginYML, cmds []Cmd) {
 		var got []string
 		for len(names) > 0 {
 			pc := plugin.Command{Name: names[0], Aliases: names[1:], Description: meta.Description,
-				Usage: meta.Usage, Permission: perm, Override: true, Node: e.commandNode(c)}
+				Usage: meta.Usage, Override: true, Node: e.commandNode(c)}
 			err := s.Commands().Register(pc)
 			if err == nil {
 				got = names
@@ -320,6 +312,27 @@ func (e *Essentials) CommandNames(name string) ([]string, bool) {
 		return nil, false
 	}
 	return r.names, true
+}
+
+// node is the permission the command needs: essentials.<name> unless the Cmd
+// names another, or none for "-". Essentials checks it itself, as on Bukkit,
+// where its plugin.yml commands carry no permission: every player sees every
+// command, and one without the node is told so. Essentials: isAuthorized(cmd)
+func (c *Cmd) node() string {
+	switch c.Permission {
+	case "-":
+		return ""
+	case "":
+		return "essentials." + c.Name
+	}
+	return c.Permission
+}
+
+// authorized reports whether the sender may run c; the console and command
+// blocks always may.
+func (c *Cmd) authorized(u *User) bool {
+	n := c.node()
+	return u == nil || n == "" || u.HasPermission(n)
 }
 
 // commandNode is a command's brigadier tree: the bare name, or the name and
@@ -372,6 +385,11 @@ func (e *Essentials) execute(c *Cmd, pc *plugin.CommandContext) (result int) {
 	if u := ctx.User; u != nil {
 		if c.Name != "mail" && u.HasPermission("essentials.mail") {
 			e.NotifyOfMail(u)
+		}
+		if !c.authorized(u) {
+			e.Log.Info(e.TlString("deniedAccessCommand", u.Name()))
+			u.Send("noAccessCommand")
+			return 0
 		}
 		if u.Data.Jailed && !u.HasPermission("essentials.jail.allow."+c.Name) {
 			if u.Data.Timestamps.Jail > 0 {
@@ -460,6 +478,9 @@ func (e *Essentials) ShowUsage(ctx *Ctx) {
 func (e *Essentials) complete(c *Cmd, pc *plugin.CommandContext, partial string) []string {
 	words := strings.Split(partial, " ")
 	ctx := e.newCtx(c, pc, words)
+	if !c.authorized(ctx.User) || ctx.User != nil && ctx.User.Data.Jailed && !ctx.User.HasPermission("essentials.jail.allow."+c.Name) {
+		return nil
+	}
 	var cands []string
 	if c.Complete != nil {
 		cands = c.Complete(ctx)

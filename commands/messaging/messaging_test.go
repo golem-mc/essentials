@@ -194,6 +194,20 @@ func TestAfk(t *testing.T) {
 	}
 }
 
+// TestNoAccess checks that a player without a command's permission sees the
+// command and is told they may not use it, as on Bukkit, rather than finding
+// it unknown, and that golem's own help (/?) still answers them.
+func TestNoAccess(t *testing.T) {
+	env := esstest.Start(t) // no permission provider: plugin.yml's defaults
+	bob := env.Join("Bob", false)
+	env.Expect(env.Run(bob, "help"), "You do not have access to that command.")
+	env.Expect(env.Run(bob, "essentials:help"), "You do not have access to that command.")
+	if msgs := env.Run(bob, "help"); esstest.Has(msgs, "Unknown or incomplete command") {
+		t.Fatalf("/help is unknown to a player without essentials.help: %q", msgs)
+	}
+	env.Expect(env.Run(bob, "?"), "Help: Index")
+}
+
 // TestInfoCommands checks /list, /whois, /seen, /ping, /help and the text
 // files.
 func TestInfoCommands(t *testing.T) {

@@ -104,13 +104,18 @@ UUID, so keep the world names the same.
 ## Permissions
 
 The permission nodes are EssentialsX's (`essentials.home`,
-`essentials.tpa`, and so on), with the defaults from its `plugin.yml`:
-everyday commands are allowed for everyone, the rest for operators.
+`essentials.tpa`, and so on), with the defaults from its `plugin.yml`. As in
+EssentialsX, almost every node defaults to operators only. Every player sees
+every command; one without the node is told "You do not have access to that
+command."
 
-golem itself only knows operators. A permission plugin, one that provides
-golem's `plugin.PermissionProvider` service, can grant or deny any node per
-player. Without one, nodes with a name in them, such as
-`essentials.kits.<kit>` or `essentials.warps.<warp>`, are for operators only.
+golem itself only knows operators. To let other players use Essentials, run
+a permission plugin, one that provides golem's `plugin.PermissionProvider`
+service, and grant them the nodes, as you would with LuckPerms on Bukkit.
+EssentialsX's [list of permissions](https://essentialsx.net/wiki/Command-Reference.html)
+says which node each command needs. Without a permission plugin, only
+operators can use Essentials' commands; golem's own help, `/?`, still works
+for everyone.
 
 golem has no permission groups yet, so every player is in the `default`
 group. That is the group that per-group chat formats, spawn points and
