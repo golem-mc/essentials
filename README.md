@@ -130,8 +130,12 @@ group. That is the group that per-group chat formats, spawn points and
   command aliases work as usual.
 - **Item counts.** golem allows at most 99 items in a stack, so
   `oversized-stacksize` is capped at 99.
-- **Economy for other plugins.** There is no Vault. Other golem plugins use
-  the economy through the `core.EconomyService` service.
+- **Economy for other plugins.** Essentials provides its economy as
+  [Vault for golem](https://github.com/golem-mc/vault)'s `vault.Economy`
+  service ("EssentialsX Economy", at normal priority), so plugins that charge
+  through Vault use it; the Vault plugin itself is not needed for that.
+  Plugins written for Essentials can also use the `core.EconomyService`
+  service, which works in decimals.
 - **Not ported:** EssentialsDiscord, EssentialsDiscordLink, EssentialsXMPP
   and EssentialsGeoIP, which connect to outside services; the update
   checker; and metrics.

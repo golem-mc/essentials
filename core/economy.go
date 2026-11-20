@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/golem-mc/golem/plugin"
+	"github.com/golem-mc/vault"
 	"github.com/shopspring/decimal"
 )
 
@@ -27,6 +28,7 @@ type Economy struct{ ess *Essentials }
 func newEconomy(e *Essentials) *Economy {
 	eco := &Economy{ess: e}
 	plugin.Provide[EconomyService](e.Server, eco, 0)
+	vault.ProvideEconomy(e.Server, vaultEconomy{eco}, vault.PriorityNormal)
 	return eco
 }
 

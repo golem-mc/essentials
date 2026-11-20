@@ -3,7 +3,8 @@ module github.com/golem-mc/essentials
 go 1.27.4
 
 require (
-	github.com/golem-mc/golem v0.0.0-20261119214906-056d502a7d33
+	github.com/golem-mc/golem v0.0.0-20261120013137-4f95109e0ff6
+	github.com/golem-mc/vault v0.0.0-20261120033259-f75dd900f11e
 	github.com/google/uuid v1.6.0
 	github.com/shopspring/decimal v1.6.0
 	gopkg.in/yaml.v3 v3.0.1
