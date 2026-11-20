@@ -36,6 +36,10 @@ jobs:
         with:
           build-cache: true
       - run: mise run build
+      - run: mise run dev:config
+      - name: Build a server with the local plugins
+        working-directory: dev
+        run: mise exec -- go tool launcher -config launcher.local.json build
 
   lint:
     name: Lint
