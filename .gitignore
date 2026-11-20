@@ -5,6 +5,5 @@ notes/
 
 # Local builds and runs
 /dev/*
-!/dev/launcher.json
 go.work
 go.work.sum

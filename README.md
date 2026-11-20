@@ -25,38 +25,32 @@ with any of the modules.
 
 Add the plugins with
 [`golem-launcher`](https://github.com/golem-mc/golem#installing-plugins).
-Each plugin is a separate entry, and all of them must have the same version:
+One line adds a plugin, with no version:
 
 ```bash
-./golem-launcher plugin add github.com/golem-mc/essentials@<version>
-./golem-launcher plugin add github.com/golem-mc/essentials/spawn@<version>
-./golem-launcher plugin add github.com/golem-mc/essentials/chat@<version>
+./golem-launcher plugin add github.com/golem-mc/essentials
+./golem-launcher plugin add github.com/golem-mc/essentials/spawn
+./golem-launcher plugin add github.com/golem-mc/essentials/chat
 ./golem-launcher
 ```
 
-`<version>` is a release tag, or a commit hash while there are no releases.
-Always give it: the modules are packages inside this one Go module, and the
-launcher can only look up the latest version of a whole module. The launcher
-writes the plugins to `launcher.json`, which you can also edit by hand:
+The launcher writes the plugins to `launcher.json`, which you can also edit
+by hand:
 
 ```json
 {
   "server": "<golem version>",
   "plugins": [
-    "github.com/golem-mc/essentials@<version>",
-    "github.com/golem-mc/essentials/chat@<version>",
-    "github.com/golem-mc/essentials/spawn@<version>"
+    "github.com/golem-mc/essentials",
+    "github.com/golem-mc/essentials/chat",
+    "github.com/golem-mc/essentials/spawn"
   ]
 }
 ```
 
 The first start builds a server with the plugins in it, which takes a few
-minutes; later starts are immediate. To update, run `plugin add` again for
-each entry with the new version, or change all the versions in
-`launcher.json`, then restart. While a module entry is listed,
-`./golem-launcher update` and `outdated` stop with an error and
-`plugin list` shows its latest version as unknown, because the launcher
-looks each entry's versions up as if it were a module of its own.
+minutes; later starts are immediate. To update, run `./golem-launcher update`
+and restart; the packages of this module move together.
 
 The plugins need golem at commit `056d502` or newer. If your server is too
 old, the launcher says so and tells you how to update it.

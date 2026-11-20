@@ -1,10 +1,21 @@
 [tools]
 go = "1.27.4"
 
+[tasks."dev:config"]
+description = "Write dev/launcher.local.json (untracked) with the golem version in go.mod and the local plugins"
+run = '''
+version=$(go list -m github.com/golem-mc/golem | awk '{print $2}')
+mkdir -p dev
+cat > dev/launcher.local.json <<JSON
+{
+  "server": "$version",
+  "plugins": ["..", "../antibuild", "../chat", "../protect", "../spawn"]
+}
+JSON
+'''
+
 [tasks.dev]
 description = "Run a development server with the local core and modules, on the golem version in go.mod"
+depends = ["dev:config"]
 dir = "dev"
-run = '''
-go tool launcher server "$(go list -m github.com/golem-mc/golem | sed 's/.*-//')"
-go tool launcher run --
-'''
+run = "go tool launcher -config launcher.local.json run --"

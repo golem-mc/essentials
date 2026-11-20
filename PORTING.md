@@ -17,7 +17,7 @@ local golem checkout instead, add a `go.work` (ignored by git):
 | `essentials.go` | The `essentials` plugin: enables core, then every command group | `Essentials.onEnable` |
 | `spawn/`, `chat/`, `protect/`, `antibuild/` | The modules, each its own plugin depending on `essentials` | `EssentialsSpawn`, `EssentialsChat`, `EssentialsProtect`, `EssentialsAntiBuild` |
 | `internal/esstest/` | Black-box test harness over golem's `plugintest`: a test server with the plugins, fake players | — |
-| `dev/` | `launcher.json` for a development server with the local packages (`mise run dev`) | — |
+| `dev/` | `mise run dev` generates an untracked `launcher.local.json` for a development server with the local packages (`mise run dev`) | — |
 
 Discord, DiscordLink, XMPP and GeoIP are not ported. They are bridges to
 external services (and GeoIP needs MaxMind's database), and none of them is
