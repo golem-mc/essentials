@@ -71,10 +71,8 @@ func fixed(words ...string) func(*core.Ctx, []string) []string {
 
 func findNode(name string) *node {
 	for _, n := range essentialsNodes {
-		for _, nn := range n.names {
-			if nn == name {
-				return n
-			}
+		if slices.Contains(n.names, name) {
+			return n
 		}
 	}
 	return nil

@@ -2,6 +2,7 @@ package player
 
 import (
 	"math"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -150,12 +151,7 @@ var gameModeNames = [...]string{plugin.Survival: "survival", plugin.Creative: "c
 func matchGameMode(s string) (*plugin.GameMode, error) {
 	s = strings.ToLower(s)
 	in := func(words ...string) bool {
-		for _, w := range words {
-			if s == w {
-				return true
-			}
-		}
-		return false
+		return slices.Contains(words, s)
 	}
 	var m plugin.GameMode
 	switch {

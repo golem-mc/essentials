@@ -100,7 +100,7 @@ func (env *Env) Drain(c *Client) { env.Messages(c, 3) }
 // the system messages they receive within 5 ticks.
 func (env *Env) Run(c *Client, line string) []string {
 	env.T.Helper()
-	c.Player.Run("/" + line)
+	c.Run("/" + line)
 	return env.Messages(c, 5)
 }
 

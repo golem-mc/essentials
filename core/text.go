@@ -1,6 +1,7 @@
 package core
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/golem-mc/golem/plugin"
@@ -109,7 +110,7 @@ func bukkitHex(s string, amp bool) (string, int) {
 func isHex(s string) bool {
 	for i := 0; i < len(s); i++ {
 		c := s[i] | 0x20
-		if !(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') {
+		if (c < '0' || c > '9') && (c < 'a' || c > 'f') {
 			return false
 		}
 	}
@@ -193,8 +194,8 @@ func ParseMini(s string, theme Theme) plugin.Text {
 			name := strings.ToLower(strings.SplitN(raw[1:], ":", 2)[0])
 			if known(name, theme) {
 				flush()
-				for j := len(stack) - 1; j >= 0; j-- {
-					if stack[j].name == name || name == "" {
+				for j, s := range slices.Backward(stack) {
+					if s.name == name || name == "" {
 						stack = stack[:j]
 						break
 					}
@@ -244,9 +245,10 @@ func tagEnd(s string, i int) int {
 		c := s[j]
 		switch {
 		case quote != 0:
-			if c == '\\' {
+			switch c {
+			case '\\':
 				j++
-			} else if c == quote {
+			case quote:
 				quote = 0
 			}
 		case c == '\'' || c == '"':

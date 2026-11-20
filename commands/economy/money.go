@@ -106,7 +106,7 @@ func payCmd() core.Cmd {
 			if strings.Contains(og, "-") {
 				return core.Tlf("payMustBePositive")
 			}
-			if strings.IndexAny(og, "0123456789.") < 0 {
+			if !strings.ContainsAny(og, "0123456789.") {
 				return core.ErrNotEnoughArgs
 			}
 			amount, err := parseAmount(og)

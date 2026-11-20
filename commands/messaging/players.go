@@ -339,7 +339,7 @@ func (g *group) mergedList(lists map[string][]*core.User, name string) []*core.U
 		if !strings.EqualFold(ent.key, name) {
 			continue
 		}
-		for _, v := range strings.Split(strings.TrimSpace(ent.value), " ") {
+		for v := range strings.SplitSeq(strings.TrimSpace(ent.value), " ") {
 			v = strings.ToLower(strings.TrimSpace(v))
 			if v == "" || len(lists[v]) == 0 {
 				continue

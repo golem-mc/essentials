@@ -122,7 +122,7 @@ func (g *group) showPage(s plugin.CommandSender, t *text, pageStr, chapterPageSt
 	}
 	start := at + 1
 	end := start
-	for end < len(lines) && !(len(lines[end]) > 0 && lines[end][0] == '#') {
+	for end < len(lines) && (len(lines[end]) == 0 || lines[end][0] != '#') {
 		end++
 	}
 	page, pages := chapterPage+1, (end-start+8)/9
@@ -444,11 +444,8 @@ func (g *group) helpInput(ctx *core.Ctx, match string) *text {
 			case whitelisted || ctx.Has("essentials.help."+pluginLow+"."+c.label):
 				lines = append(lines, line)
 			case c.permission != "":
-				for _, perm := range strings.Split(c.permission, ";") {
-					if ctx.Has(perm) {
-						lines = append(lines, line)
-						break
-					}
+				if slices.ContainsFunc(strings.Split(c.permission, ";"), ctx.Has) {
+					lines = append(lines, line)
 				}
 			case !hidePermissionless:
 				lines = append(lines, line)

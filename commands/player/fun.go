@@ -400,7 +400,7 @@ func removeCmd() core.Cmd {
 		if ctx.Args[0] == "*" || ctx.Args[0] == "all" {
 			kinds = []string{"all"}
 		} else {
-			for _, s := range strings.Split(ctx.Args[0], ",") {
+			for s := range strings.SplitSeq(ctx.Args[0], ",") {
 				low := strings.ToLower(s)
 				switch {
 				case slices.Contains(removeKinds, low):

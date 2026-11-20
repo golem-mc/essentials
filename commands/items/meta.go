@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"maps"
 	"regexp"
 	"slices"
 	"strconv"
@@ -241,9 +242,7 @@ func cloneEnch(m map[plugin.Enchantment]int) map[plugin.Enchantment]int {
 		return nil
 	}
 	out := make(map[plugin.Enchantment]int, len(m))
-	for k, v := range m {
-		out[k] = v
-	}
+	maps.Copy(out, m)
 	return out
 }
 

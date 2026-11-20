@@ -430,8 +430,7 @@ func (e *Essentials) execute(c *Cmd, pc *plugin.CommandContext) (result int) {
 // ShowError shows err: a TlError translated, anything else in
 // errorWithMessage. Essentials: showError
 func (e *Essentials) ShowError(ctx *Ctx, err error) {
-	var tl *TlError
-	if errors.As(err, &tl) {
+	if tl, ok := errors.AsType[*TlError](err); ok {
 		if tl.Plain {
 			ctx.Send(tl.Key, tl.Args...)
 			return

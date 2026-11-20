@@ -431,7 +431,7 @@ func (m *MetaItem) addFirework(key, value string) error {
 	switch key {
 	case "color", "colour", "c":
 		if len(m.fwColors) > 0 && m.Stack.Item == registry.ItemFireworkRocket {
-			m.flushExplosion()
+			_ = m.flushExplosion()
 		}
 		m.fwColors = strings.Split(strings.ToLower(value), ",")
 		m.validFirework = true
@@ -481,23 +481,24 @@ func (m *MetaItem) flushExplosion() error {
 	if shape == "" {
 		shape = "small_ball"
 	}
-	e := fmt.Sprintf("{shape:%q,colors:%s", shape, colors)
+	var e strings.Builder
+	fmt.Fprintf(&e, "{shape:%q,colors:%s", shape, colors)
 	if len(m.fwFade) > 0 {
 		fade, err := colorList(m.fwFade)
 		if err != nil {
 			return err
 		}
-		e += ",fade_colors:" + fade
+		e.WriteString(",fade_colors:" + fade)
 	}
 	for _, fx := range m.fwFx {
 		switch strings.TrimSpace(fx) {
 		case "trail":
-			e += ",has_trail:1b"
+			e.WriteString(",has_trail:1b")
 		case "twinkle", "flicker":
-			e += ",has_twinkle:1b"
+			e.WriteString(",has_twinkle:1b")
 		}
 	}
-	m.fwExpl = append(m.fwExpl, e+"}")
+	m.fwExpl = append(m.fwExpl, e.String()+"}")
 	m.fwColors, m.fwFade, m.fwFx, m.fwShape = nil, nil, nil, ""
 	return nil
 }
