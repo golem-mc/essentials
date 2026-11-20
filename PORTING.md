@@ -23,6 +23,43 @@ Discord, DiscordLink, XMPP and GeoIP are not ported. They are bridges to
 external services (and GeoIP needs MaxMind's database), and none of them is
 needed for the in-game features.
 
+## Deliberate differences and migration
+
+- **Vanilla commands.** Core registers every command with `Override`, so
+  `/give`, `/tp`, `/msg`, `/ban`, `/time` and the rest are Essentials' versions.
+  Vanilla's stay reachable as `/minecraft:give`; a command in
+  `disabled-commands` goes back to vanilla. `/essentials:give` and aliases work.
+- **Item counts.** golem allows at most 99 items in a stack, so
+  `oversized-stacksize` is capped at 99.
+- **Economy for other plugins.** Essentials provides `vault.Economy`
+  ([Vault for golem](https://github.com/golem-mc/vault), "EssentialsX Economy",
+  normal priority); the Vault plugin itself is not needed. Plugins written for
+  Essentials can use `core.EconomyService`, which works in decimals.
+- **Permissions.** golem only knows operators. Other players need a plugin
+  providing `plugin.PermissionProvider`. Without one only operators can use
+  Essentials' commands (golem's `/?` still works). golem has no permission
+  groups, so every player is in the `default` group, which per-group chat
+  formats, spawn points and `/list` sections use. Every player sees every
+  command; one without the node is told "You do not have access to that
+  command."
+- **Not ported:** Discord, DiscordLink, XMPP and GeoIP (external services), the
+  update checker and metrics.
+- **Moving from Bukkit or Paper.** Copy `plugins/Essentials/` into
+  `plugins/essentials/`. `userdata/*.yml`, `warps/*.yml`, `jail.yml` and
+  `spawn.yml` load as they are. Saved locations are matched to a world by name
+  (`world`, `world_nether`, `world_the_end`), not Bukkit's world UUID.
+- **Launcher.** The plugins need golem at commit `056d502` or newer; the
+  launcher says so when the server is too old. `launcher.json` can be edited by
+  hand.
+- **Not yet tried by hand with several players:** `/tpa`, `/pay` to another
+  player, `/invsee`, vanish, jail and temporary bans. Automated tests cover them.
+
+## Development server
+
+`mise run dev` starts a server with the core and the `spawn`, `chat`, `protect`
+and `antibuild` packages from your checkout, on the golem version in `go.mod`,
+in `dev/`.
+
 ## Writing a command
 
 Port `Commandfoo.java` to a `core.Cmd` in its group's package and add it to the
