@@ -17,10 +17,13 @@ EssentialsX's Java code.
 ## Before you open a pull request
 
 ```bash
-mise exec -- gofmt -l .        # must print nothing
-mise exec -- go vet ./...
-mise exec -- go mod tidy -diff
-mise exec -- go test ./...     # about a minute
+mise run fmt            # gofmt
+mise run fix            # go fix
+mise run tidy           # go mod tidy
+mise run build
+mise run lint
+mise run test:changed   # repeats the tests your branch adds or changes
+mise run check          # everything above plus the whole suite (about a minute)
 ```
 
 CI runs the same checks on every pull request.

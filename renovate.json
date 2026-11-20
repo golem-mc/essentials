@@ -57,6 +57,24 @@
         "* 0-6 * * 1"
       ],
       "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "golem-mc modules update daily, together, and merge themselves.",
+      "groupName": "golem-mc modules",
+      "matchPackageNames": [
+        "github.com/golem-mc/**"
+      ],
+      "schedule": [
+        "* 0-5 * * *"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "golem itself gets its own group.",
+      "groupName": "golem",
+      "matchPackageNames": [
+        "github.com/golem-mc/golem"
+      ]
     }
   ],
   "customManagers": [
