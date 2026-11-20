@@ -239,7 +239,12 @@ func spawnMobs(ctx *core.Ctx, target *core.User, loc plugin.Location, parts []st
 		}
 	}
 	first, _ := mobByName(parts[0])
-	ctx.SendText(plugin.Plain(fmt.Sprintf("%d %s%s %s", count*len(parts), strings.ToLower(first.name), first.suffix, tl(ctx, "spawned"))))
+	total := count * len(parts)
+	suffix := first.suffix
+	if total == 1 {
+		suffix = ""
+	}
+	ctx.SendText(plugin.Plain(fmt.Sprintf("%d %s%s %s", total, strings.ToLower(first.name), suffix, tl(ctx, "spawned"))))
 	return nil
 }
 

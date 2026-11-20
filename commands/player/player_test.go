@@ -171,6 +171,9 @@ func TestSpawnmob(t *testing.T) {
 		t.Fatalf("sheep colour: %s", out)
 	}
 	env.Expect(env.Run(a, "spawnmob pig,zombie 1 Alice"), "2 pigs spawned")
+	if msgs := env.Run(a, "spawnmob bat 1 Alice"); !esstest.Has(msgs, "1 bat spawned") || esstest.Has(msgs, "bats") {
+		t.Fatalf("one bat: %q", msgs)
+	}
 	_, pigs := countType(env, "pig")
 	if len(pigs) != 1 || len(pigs[0].Passengers()) != 1 || pigs[0].Passengers()[0].Type().Name() != "minecraft:zombie" {
 		t.Fatal("the zombie does not ride the pig")
