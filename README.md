@@ -16,7 +16,7 @@ line each, then start the server:
 ./golem-launcher plugin add github.com/golem-mc/essentials            # core: required
 ./golem-launcher plugin add github.com/golem-mc/essentials/spawn      # optional: /spawn, /setspawn, first-join spawn
 ./golem-launcher plugin add github.com/golem-mc/essentials/chat       # optional: chat formats, local chat, shouting
-./golem-launcher plugin add github.com/golem-mc/essentials/protect    # optional: switches off explosions, fire spread, mob griefing
+./golem-launcher plugin add github.com/golem-mc/essentials/protect    # optional: switches off fire spread and the dragon's block damage by default; more in `protect:` in `config.yml`
 ./golem-launcher plugin add github.com/golem-mc/essentials/antibuild  # optional: build protection
 ./golem-launcher
 ```
@@ -313,7 +313,7 @@ The main options in `config.yml`, with their defaults:
 | `per-warp-permission` | `false` | require `essentials.warps.<name>` for each warp |
 | `chat.radius` | `0` | local chat range in blocks; `0` is global (chat module) |
 | `chat.format` | `<{DISPLAYNAME}> {MESSAGE}` | chat line format (chat module) |
-| `protect.prevent.*` | `fire-spread`, `lava-fire-spread`, `lightning-fire-spread` on | behaviours the protect module switches off |
+| `protect.prevent.*` | `fire-spread`, `lava-fire-spread`, `lightning-fire-spread`, `enderdragon-blockdamage` on | behaviours the protect module switches off |
 | `newbies.announce-format` | `&dWelcome {DISPLAYNAME}&d to the server!` | first-join announcement |
 | `newbies.kit` | `tools` | kit given on first join |
 | `respawn-at-home` | `false` | respawn at a home instead of the spawn point |
