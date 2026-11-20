@@ -1,2 +1,10 @@
 [tools]
 go = "1.27.4"
+
+[tasks.dev]
+description = "Run a development server with the local core and modules, on the golem version in go.mod"
+dir = "dev"
+run = '''
+go tool launcher server "$(go list -m github.com/golem-mc/golem | sed 's/.*-//')"
+go tool launcher run --
+'''

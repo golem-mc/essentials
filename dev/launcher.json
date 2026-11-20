@@ -1,0 +1,10 @@
+{
+  "server": "66f42d080407",
+  "plugins": [
+    "..",
+    "../antibuild",
+    "../chat",
+    "../protect",
+    "../spawn"
+  ]
+}

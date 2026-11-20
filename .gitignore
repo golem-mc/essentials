@@ -4,6 +4,7 @@ GOLEM_NOTES.md
 notes/
 
 # Local builds and runs
-/essentials-server
+/dev/*
+!/dev/launcher.json
 go.work
 go.work.sum

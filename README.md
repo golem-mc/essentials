@@ -61,21 +61,12 @@ looks each entry's versions up as if it were a module of its own.
 The plugins need golem at commit `056d502` or newer. If your server is too
 old, the launcher says so and tells you how to update it.
 
-### As a ready-built server
+### Development server
 
-This repository also builds a golem server with the core and all four
-modules included. You need [Go](https://go.dev/dl/) 1.27.4 or newer, or
-[mise](https://mise.jdx.dev/), which installs the version in `mise.toml`:
-
-```bash
-git clone https://github.com/golem-mc/essentials.git
-cd essentials
-go build -o essentials-server ./cmd/server   # with mise: mise exec -- go build ...
-./essentials-server --nogui
-```
-
-The server writes `server.properties` and the world into the directory it
-runs in, as the vanilla server does. Stop it with `stop` or Ctrl+C.
+With [mise](https://mise.jdx.dev/), `mise run dev` starts a server with the
+core and the `spawn`, `chat`, `protect` and `antibuild` packages from your
+checkout, on the golem version in `go.mod`. It runs in `dev/`, where the
+server writes `server.properties`, the world and the plugin files.
 
 ## Configuration
 
