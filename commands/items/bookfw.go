@@ -64,13 +64,12 @@ func componentText(t nbt.Tag) string {
 	case nbt.String:
 		return string(v)
 	case nbt.CompoundTag:
-		return componentText(v.Entries())
-	case nbt.Compound:
+		c := v.Entries()
 		var b strings.Builder
-		if s, ok := v["text"].(nbt.String); ok {
+		if s, ok := c["text"].(nbt.String); ok {
 			b.WriteString(string(s))
 		}
-		if extra, ok := v["extra"].(nbt.List); ok {
+		if extra, ok := c["extra"].(nbt.List); ok {
 			for _, e := range extra.Items {
 				b.WriteString(componentText(e))
 			}
@@ -136,7 +135,7 @@ func runBook(ctx *core.Ctx) error {
 			}
 			var pages []nbt.Tag
 			for _, pg := range list(book["pages"]) {
-				var raw nbt.Tag = pg
+				raw := pg
 				if c, ok := pg.(nbt.Compound); ok && c["raw"] != nil {
 					raw = c["raw"]
 				}

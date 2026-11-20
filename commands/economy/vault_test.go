@@ -31,8 +31,8 @@ func (shop) Enable(s plugin.Server) error {
 		p.SendMessage(plugin.Plain(fmt.Sprintf("Paid %s, %s left", eco.Format(price), eco.Format(eco.Balance(p.UUID())))))
 		return 1, nil
 	}
-	return s.Commands().Register(plugin.Command{Name: "buy", Node: plugin.Node{
-		Children: []plugin.Node{{Arg: plugin.IntArg("price", 0, 1_000_000), Run: buy}}}})
+	return s.Commands().Register(plugin.Command{Name: "buy",
+		Children: []plugin.Node{{Arg: plugin.IntArg("price", 0, 1_000_000), Run: buy}}})
 }
 
 func (shop) Disable() {}

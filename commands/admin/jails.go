@@ -208,7 +208,7 @@ func respawn(e *core.Essentials, u *core.User, p plugin.Player) {
 	if !ok {
 		loc = p.World().SpawnPoint()
 	}
-	u.TeleportNow(core.LocationTarget(loc), plugin.TeleportPlugin)
+	_ = u.TeleportNow(core.LocationTarget(loc), plugin.TeleportPlugin)
 }
 
 // setJailTime sets when the user is released. With jail-online-time,

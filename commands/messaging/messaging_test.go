@@ -40,13 +40,13 @@ type otherPlugin struct{}
 func (otherPlugin) Enable(s plugin.Server) error {
 	run := func(*plugin.CommandContext) (int, error) { return 1, nil }
 	if err := s.Commands().Register(plugin.Command{Name: "zap", Aliases: []string{"zapper"}, Description: "Zaps things.", Usage: "/<command> <target>",
-		Permission: "otherplug.zap", Node: plugin.Node{Run: run}}); err != nil {
+		Permission: "otherplug.zap", Run: run}); err != nil {
 		return err
 	}
-	if err := s.Commands().Register(plugin.Command{Name: "freebie", Description: "Free stuff.", Node: plugin.Node{Run: run}}); err != nil {
+	if err := s.Commands().Register(plugin.Command{Name: "freebie", Description: "Free stuff.", Run: run}); err != nil {
 		return err
 	}
-	return s.Commands().Register(plugin.Command{Name: "secret", Description: "Nothing to see.", Node: plugin.Node{Run: run}})
+	return s.Commands().Register(plugin.Command{Name: "secret", Description: "Nothing to see.", Run: run})
 }
 
 func (otherPlugin) Disable() {}

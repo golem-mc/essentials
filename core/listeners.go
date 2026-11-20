@@ -366,8 +366,8 @@ func (e *Essentials) cooldowns() []commandCooldown {
 			pat = k[1:]
 		} else {
 			pat = regexp.QuoteMeta(strings.TrimPrefix(k, "/"))
-			if strings.HasSuffix(pat, `\*`) {
-				pat = strings.TrimSuffix(pat, `\*`) + ".*"
+			if before, ok0 := strings.CutSuffix(pat, `\*`); ok0 {
+				pat = before + ".*"
 			} else {
 				pat += "( .*)?"
 			}

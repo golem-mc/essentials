@@ -100,7 +100,7 @@ func registerMobs(e *core.Essentials) { e.RegisterCommand(spawnmobCmd()) }
 // Essentials: SpawnMob.mobParts
 func mobParts(s string) []string {
 	var out []string
-	for _, part := range strings.Split(s, ",") {
+	for part := range strings.SplitSeq(s, ",") {
 		name, _, _ := strings.Cut(part, ":")
 		out = append(out, name)
 	}
@@ -111,7 +111,7 @@ func mobParts(s string) []string {
 // for a part without a colon. Essentials: SpawnMob.mobData
 func mobDatas(s string) []*string {
 	var out []*string
-	for _, part := range strings.Split(s, ",") {
+	for part := range strings.SplitSeq(s, ",") {
 		_, data, ok := strings.Cut(part, ":")
 		if !ok {
 			out = append(out, nil)
@@ -358,7 +358,7 @@ func changeMobData(ctx *core.Ctx, m mob, ent plugin.Entity, data string, target 
 		if matched == "" {
 			return nil
 		}
-		next := strings.Replace(data, matched, "", -1)
+		next := strings.ReplaceAll(data, matched, "")
 		if next == data {
 			return nil
 		}

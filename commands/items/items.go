@@ -143,7 +143,7 @@ func preventedType(p plugin.Player, prefix string, it registry.Item) bool {
 	wild, wildSet := permExact(p, prefix+"*")
 	mat, matSet := permExact(p, prefix+typeName(it))
 	wildTrue := wildSet && wild
-	return (wildTrue && !(matSet && !mat)) || (!wildTrue && matSet && mat)
+	return (wildTrue && (!matSet || mat)) || (!wildTrue && matSet && mat)
 }
 
 // tlRaw answers a message as MiniMessage in the sender's locale, for

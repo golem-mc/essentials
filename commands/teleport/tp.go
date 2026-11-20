@@ -63,7 +63,7 @@ func (g *group) costOf(u *core.User, command string) *core.Trade {
 
 // Essentials: Commandback
 func (g *group) runBack(ctx *core.Ctx) error {
-	if ctx.User != nil && !(len(ctx.Args) > 0 && ctx.Has("essentials.back.others")) {
+	if ctx.User != nil && (len(ctx.Args) == 0 || !ctx.Has("essentials.back.others")) {
 		return g.teleportBack(ctx, ctx.User)
 	}
 	if len(ctx.Args) == 0 {

@@ -151,7 +151,7 @@ func (m *Spawn) delayedJoin(p plugin.Player, firstJoin bool) {
 		}
 		if format := e.Config.String("newbies.announce-format", "-"); format != "" {
 			text := e.ReplaceKeywords(e.Config.String("newbies.announce-format", "&dWelcome {DISPLAYNAME} to the server!"), u)
-			for _, line := range strings.Split(text, "\n") {
+			for line := range strings.SplitSeq(text, "\n") {
 				broadcast(e, u, line)
 			}
 		}

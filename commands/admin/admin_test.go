@@ -21,9 +21,8 @@ func init() {
 type otherPlugin struct{}
 
 func (*otherPlugin) Enable(s plugin.Server) error {
-	return s.Commands().Register(plugin.Command{Name: "warp", Node: plugin.Node{
-		Run: func(*plugin.CommandContext) (int, error) { return 1, nil },
-	}})
+	return s.Commands().Register(plugin.Command{Name: "warp",
+		Run: func(*plugin.CommandContext) (int, error) { return 1, nil }})
 }
 
 func (*otherPlugin) Disable() {}
