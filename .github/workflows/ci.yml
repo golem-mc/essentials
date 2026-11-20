@@ -40,4 +40,7 @@ jobs:
           fi
       - run: mise exec -- go vet ./...
       - run: mise exec -- go mod tidy -diff
-      - run: mise exec -- go build ./cmd/server
+      - run: mise run dev:config
+      - name: Build a server with the local plugins
+        working-directory: dev
+        run: mise exec -- go tool launcher -config launcher.local.json build

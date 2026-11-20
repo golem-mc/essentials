@@ -3,7 +3,7 @@ module github.com/golem-mc/essentials
 go 1.27.4
 
 require (
-	github.com/golem-mc/golem v0.0.0-20261120013137-4f95109e0ff6
+	github.com/golem-mc/golem v0.0.0-20261120102836-66f42d080407
 	github.com/golem-mc/vault v0.0.0-20261120033259-f75dd900f11e
 	github.com/google/uuid v1.6.0
 	github.com/shopspring/decimal v1.6.0
@@ -15,6 +15,9 @@ require (
 	github.com/magiconair/properties v1.18.13 // indirect
 	github.com/pierrec/lz4/v4 v4.1.33 // indirect
 	go.yaml.in/yaml/v4 v4.0.0 // indirect
+	golang.org/x/mod v0.43.0 // indirect
 	golang.org/x/sys v0.50.0 // indirect
 	golang.org/x/term v0.48.0 // indirect
 )
+
+tool github.com/golem-mc/golem/launcher
