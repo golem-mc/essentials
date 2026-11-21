@@ -4,7 +4,7 @@ go 1.27.4
 
 require (
 	github.com/golem-mc/golem v0.1.0
-	github.com/golem-mc/vault v0.0.0-20261120033259-f75dd900f11e
+	github.com/golem-mc/vault v0.0.0-20261121033929-eb5680247d38
 	github.com/google/uuid v1.6.0
 	github.com/shopspring/decimal v1.6.0
 	gopkg.in/yaml.v3 v3.0.1
