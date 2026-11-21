@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/golem-mc/essentials/compare/v0.1.0...v0.1.1) (2026-11-21)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/golem-mc/vault to v0.1.0 ([#25](https://github.com/golem-mc/essentials/issues/25)) ([7dc64a7](https://github.com/golem-mc/essentials/commit/7dc64a7a87b0b13d772297bda561490bacca53c6))
+* give /head to skull only so every command registers ([#23](https://github.com/golem-mc/essentials/issues/23)) ([c4af1a5](https://github.com/golem-mc/essentials/commit/c4af1a59751613b9d3cd7a9d0e9401eaaba0b975))
+
 ## 0.1.0 (2026-11-21)
 
 
