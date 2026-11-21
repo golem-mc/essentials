@@ -3,7 +3,6 @@ package core
 import (
 	"errors"
 	"fmt"
-	"regexp"
 	"slices"
 	"strconv"
 	"strings"
@@ -228,9 +227,6 @@ type registered struct {
 	names []string
 }
 
-// takenName reads the name out of the server's "command %q is taken" error.
-var takenName = regexp.MustCompile(`command "([^"]+)" is taken`)
-
 // RegisterCommand registers commands. A name or alias a vanilla command (or
 // another plugin) already has is dropped, since golem lets no plugin
 // replace one; the command keeps its other names and essentials:<name>.
@@ -265,23 +261,21 @@ func (e *Essentials) registerOn(s plugin.Server, metas *pluginYML, cmds []Cmd) {
 		}
 		// Override takes vanilla's names, as Essentials does on Bukkit
 		// (disabled-commands gives one back). A name another plugin holds
-		// fails the whole registration, so it is left to that plugin and
-		// the rest are registered again.
+		// is registered by golem only as plugin:name and reported with
+		// ErrNameTaken; the command keeps its other names.
+		pc := plugin.Command{Name: names[0], Aliases: names[1:], Description: meta.Description,
+			Usage: meta.Usage, Override: true, Node: e.commandNode(c)}
 		var got []string
-		for len(names) > 0 {
-			pc := plugin.Command{Name: names[0], Aliases: names[1:], Description: meta.Description,
-				Usage: meta.Usage, Override: true, Node: e.commandNode(c)}
-			err := s.Commands().Register(pc)
-			if err == nil {
-				got = names
-				break
-			}
-			m := takenName.FindStringSubmatch(err.Error())
-			if m == nil || !slices.Contains(names, m[1]) {
-				e.Log.Error("cannot register command", "command", c.Name, "err", err)
-				break
-			}
-			names = slices.DeleteFunc(names, func(n string) bool { return n == m[1] })
+		switch err := s.Commands().Register(pc); {
+		case err == nil:
+			got = names
+		case errors.Is(err, plugin.ErrNameTaken):
+			list := strings.TrimPrefix(err.Error(), plugin.ErrNameTaken.Error()+": ")
+			skipped := strings.Split(list, ", ")
+			got = slices.DeleteFunc(slices.Clone(names), func(n string) bool { return slices.Contains(skipped, n) })
+			e.Log.Warn("command names taken by another command are skipped", "command", c.Name, "names", skipped)
+		default:
+			e.Log.Error("cannot register command", "command", c.Name, "err", err)
 		}
 		names = got
 		if len(names) > 0 {

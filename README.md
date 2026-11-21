@@ -191,7 +191,7 @@ Every command also answers to `/essentials:<name>`.
 | `/firework <<meta param>\|power [amount]\|clear\|fire [amount]>` | Allows you to modify a stack of fireworks | `essentials.firework` |
 | `/skull [owner] [player]` | Set the owner of a player skull (also `/head`, `/playerskull`) | `essentials.skull` |
 | `/book [title\|author [name]]` | Allows reopening and editing of sealed books | `essentials.book` |
-| `/hat [remove]` | Get some cool new headgear (also `/head`) | `essentials.hat` |
+| `/hat [remove]` | Get some cool new headgear | `essentials.hat` |
 | `/more [amount]` | Fills the item stack in hand to specified amount, or to maximum size if none is specified | `essentials.more` |
 | `/repair [hand\|all]` | Repairs the durability of one or all items (also `/fix`) | `essentials.repair` |
 | `/condense [itemname]` | Condenses items into a more compact blocks (also `/blocks`, `/compact`, `/toblocks`) | `essentials.condense` |
