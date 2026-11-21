@@ -27,14 +27,24 @@
       "automergeStrategy": "squash"
     },
     {
-      "description": "Indirect Go modules are updated too, not only direct ones.",
+      "description": "Indirect Go modules follow golem's go.mod; bumping them alone makes golem-launcher refuse to build.",
       "matchManagers": [
         "gomod"
       ],
       "matchDepTypes": [
         "indirect"
       ],
-      "enabled": true
+      "enabled": false
+    },
+    {
+      "description": "google/uuid is also required by golem; it moves with the daily golem bump.",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "github.com/google/uuid"
+      ],
+      "enabled": false
     },
     {
       "description": "The go directive in go.mod and the toolchain in mise.toml move together.",
