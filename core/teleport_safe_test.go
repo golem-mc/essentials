@@ -15,6 +15,9 @@ import (
 type netherWorld struct {
 	plugin.World
 	lake int // half-width of the lava lake
+	// surface makes HighestBlockY answer the netherrack floor (31) outside
+	// the lake instead of the roof (127).
+	surface bool
 }
 
 func block(name string) plugin.BlockState {
@@ -44,7 +47,12 @@ func (w netherWorld) BlockState(p plugin.BlockPos) plugin.BlockState {
 	}
 	return block("air")
 }
-func (netherWorld) HighestBlockY(x, z int, h plugin.Heightmap) int { return 127 }
+func (w netherWorld) HighestBlockY(x, z int, h plugin.Heightmap) int {
+	if w.surface && (x < -w.lake || x > w.lake) {
+		return 31
+	}
+	return 127
+}
 
 func TestSafeDestinationNetherRoof(t *testing.T) {
 	env := esstest.Start(t)
@@ -83,5 +91,17 @@ func TestSafeDestinationNetherClimb(t *testing.T) {
 	got, err = env.Ess.SafeDestination(loc)
 	if err != nil || got.Pos.Y != 128 {
 		t.Errorf("without the cap: landed at %v, %v; want y 128", got.Pos, err)
+	}
+}
+
+// TestSafeDestinationNetherFallback: a lava lake just wider than the search
+// reaches the last fallback, which re-enters a column at the highest block +1:
+// the first column past the lake is entered standing on its floor.
+func TestSafeDestinationNetherFallback(t *testing.T) {
+	env := esstest.Start(t)
+	loc := plugin.Location{World: netherWorld{lake: 10, surface: true}, Pos: plugin.Vec3{X: 0.5, Y: 60, Z: 0.5}}
+	got, err := env.Ess.SafeDestination(loc)
+	if err != nil || got.Pos.X != 11.5 || got.Pos.Y != 32 {
+		t.Errorf("landed at %v, %v; want {11.5 32 0.5}", got.Pos, err)
 	}
 }
