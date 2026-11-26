@@ -359,6 +359,11 @@ func (e *Essentials) SafeDestination(loc plugin.Location) (plugin.Location, erro
 	}
 	minY, maxY := w.MinY(), w.MinY()+w.Height()-1
 	b := loc.Pos.Block()
+	// Essentials: a search starting below the logical height (the nether
+	// roof) never goes above it.
+	if e.Settings.ConsiderWorldHeight() && b.Y < w.LogicalHeight() {
+		maxY = min(maxY, w.LogicalHeight())
+	}
 	x, y, z := b.X, int(math.Round(loc.Pos.Y)), b.Z
 	if border := w.Border(); border != nil && !border.Contains(plugin.Vec3{X: float64(x), Z: float64(z)}) {
 		cx, cz := border.Center()
@@ -406,7 +411,7 @@ func (e *Essentials) SafeDestination(loc plugin.Location) (plugin.Location, erro
 		y--
 		if y <= minY+1 {
 			x++
-			y = w.HighestBlockY(x, z, plugin.MotionBlocking)
+			y = min(w.HighestBlockY(x, z, plugin.MotionBlocking)+1, maxY)
 			if x-48 > ox {
 				return loc, Tlf("holeInFloor")
 			}
