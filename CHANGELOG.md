@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.1](https://github.com/golem-mc/essentials/compare/v0.1.0...v0.1.1) (2026-11-28)
+
+
+### Bug Fixes
+
+* **deps:** update github.com/golem-mc/golem digest to 04d8cc0 ([#33](https://github.com/golem-mc/essentials/issues/33)) ([41e7341](https://github.com/golem-mc/essentials/commit/41e73410dc4cf4d5b804a1568bf25b0452d568c3))
+* **deps:** update github.com/golem-mc/golem digest to b18f3d8 ([#34](https://github.com/golem-mc/essentials/issues/34)) ([7cad008](https://github.com/golem-mc/essentials/commit/7cad00854fc228b69a9547f5019a06194362e284))
+* **deps:** update github.com/golem-mc/golem digest to de87619 ([#35](https://github.com/golem-mc/essentials/issues/35)) ([5f2dad2](https://github.com/golem-mc/essentials/commit/5f2dad2d6b9faeb8b78aa7dfdbabb190f761ff20))
+* **deps:** update github.com/golem-mc/golem digest to ee5640c ([#36](https://github.com/golem-mc/essentials/issues/36)) ([f2a50b4](https://github.com/golem-mc/essentials/commit/f2a50b45eefad29c36f8637e85f33dbf102d955e))
+* **deps:** update module github.com/golem-mc/golem to v0.2.0 ([#21](https://github.com/golem-mc/essentials/issues/21)) ([aee978a](https://github.com/golem-mc/essentials/commit/aee978a3da2ecd1c136f324c5e6421e8e5a5be39))
+* **deps:** update module github.com/golem-mc/vault to v0.1.0 ([#25](https://github.com/golem-mc/essentials/issues/25)) ([7dc64a7](https://github.com/golem-mc/essentials/commit/7dc64a7a87b0b13d772297bda561490bacca53c6))
+* give /head to skull only so every command registers ([#23](https://github.com/golem-mc/essentials/issues/23)) ([c4af1a5](https://github.com/golem-mc/essentials/commit/c4af1a59751613b9d3cd7a9d0e9401eaaba0b975))
+* keep safe teleports under the nether roof ([#31](https://github.com/golem-mc/essentials/issues/31)) ([52a988e](https://github.com/golem-mc/essentials/commit/52a988e76970207f1584aed3790f06a8d69f2d5f))
+
 ## 0.1.0 (2026-11-21)
 
 
